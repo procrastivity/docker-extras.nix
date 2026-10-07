@@ -1,0 +1,65 @@
+name: Cron
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 4 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cron
+  cancel-in-progress: false
+
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.repository.default_branch }}
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@8aa03977d8d733052d78f4e008a241fd1dbf36b3 # v31.10.6
+        with:
+          nix_path: nixpkgs=channel:nixpkgs-unstable
+
+      - name: Update version
+        id: update
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: ./update.sh
+
+      - name: Commit and push changes
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          if git diff --quiet --exit-code VERSION.json; then
+            echo "No changes to commit"
+            exit 0
+          fi
+
+          version="${{ steps.update.outputs.version }}"
+
+          push_tag=false
+          if [[ "${{ steps.update.outputs.version_changed }}" == "true" ]]; then
+            git add VERSION.json
+            git commit -m "Update docker-extras to ${version}"
+
+            if ! git ls-remote --tags --refs origin "refs/tags/${version}" | grep -q .; then
+              git tag -a "${version}" -m "${version}"
+              push_tag=true
+            fi
+          fi
+
+          git push origin "HEAD:${DEFAULT_BRANCH}"
+          if [[ "$push_tag" == "true" ]]; then
+            git push origin "refs/tags/${version}"
+          fi
