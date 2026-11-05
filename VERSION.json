@@ -1,17 +1,17 @@
 {
-  "rev": "v0.1.1",
+  "rev": "v0.1.2",
   "systems": {
     "aarch64-darwin": {
-      "url": "https://github.com/procrastivity/docker-extras/releases/download/v0.1.1/docker-extras-darwin-arm64.tar.gz",
-      "hash": "sha256-Wzbu9rwKg+6IeUhphQp/kfSh9iz66TtqYBnTpw73lBY="
+      "url": "https://github.com/procrastivity/docker-extras/releases/download/v0.1.2/docker-extras-darwin-arm64.tar.gz",
+      "hash": "sha256-nhX5LcCYtw4BY+RK9uJCRM8KHfYOuglkWzpX8CKxzXc="
     },
     "aarch64-linux": {
-      "url": "https://github.com/procrastivity/docker-extras/releases/download/v0.1.1/docker-extras-linux-arm64.tar.gz",
-      "hash": "sha256-gajsbEDCdv+iKu0+KclsQtE4jx1GPleP/iO2J7eWDq4="
+      "url": "https://github.com/procrastivity/docker-extras/releases/download/v0.1.2/docker-extras-linux-arm64.tar.gz",
+      "hash": "sha256-yzSOa1gSthFrKbTJTOez4w+agQ0z7NUNXbcVdlTlPJA="
     },
     "x86_64-linux": {
-      "url": "https://github.com/procrastivity/docker-extras/releases/download/v0.1.1/docker-extras-linux-amd64.tar.gz",
-      "hash": "sha256-tbipQCIh84cBTu07xlbLmbrHqZ3j4XSrlMuP4JjW3Go="
+      "url": "https://github.com/procrastivity/docker-extras/releases/download/v0.1.2/docker-extras-linux-amd64.tar.gz",
+      "hash": "sha256-wGcILguH4b2E1kJURyfKS4ApESX8r1is1aHAxkzGbcw="
     }
   }
 }
